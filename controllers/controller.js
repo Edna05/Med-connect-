@@ -36,7 +36,7 @@ router.get('/:id', async (req, res) => {
 module.exports = router;
 
 const express = require('express');
-const router = express.Router();
+const route = express.Router();
 const Hospital = require('../model/Hospital'); // Assurez-vous d'avoir défini le modèle Hospital
 
 // Route pour récupérer tous les hôpitaux
@@ -66,12 +66,12 @@ router.get('/:id', async (req, res) => {
 
 // faire d Autres routes pour la création, la mise à jour et la suppression d'un hôpital
 
-module.exports = router;
+module.exports = Routes;
 
 // routes/patient.js
 
 const express = require('express');
-const router = express.Router();
+const Routes = express.Router();
 const Patient = require('../models/Patient'); // Assurez-vous d'avoir défini le modèle Patient
 
 // Route pour récupérer tous les patients
@@ -166,7 +166,7 @@ module.exports = router;
 // routes/services.js
 
 const express = require('express');
-const router = express.Router();
+const routes = express.Router();
 const Service = require('../models/Service'); // Assurez-vous d'avoir défini le modèle Service
 
 // Route pour récupérer tous les services
@@ -248,3 +248,10 @@ router.delete('/:id', async (req, res) => {
 module.exports
 
 
+// controllers gestionnaires
+
+const express = require('express');
+const router = express.Router();
+const Hospital = require('../models/Hospital'); // Assurez-vous d'avoir défini le modèle Hospital
+const Patient = require('../models/Patient'); // Assurez-vous d'avoir défini le modèle Patient
+const Service = require('../models/Service'); // Assurez-vous d'avoir défini le modèle Service

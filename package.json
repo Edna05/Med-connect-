@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js",
     "start": "nodemom server.js"
-    
   },
   "author": "Chefonanga",
   "license": "ISC",
@@ -14,6 +14,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "mysql": "^2.18.1",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "postman": "^0.2.0"
   }
 }
