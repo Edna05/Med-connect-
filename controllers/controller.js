@@ -1,257 +1,419 @@
+//controller administrateur
 
+import { Administrateur } from '../models/administrateur.js';
 
-// hopitalController.js
-
-const express = require('express');
-const routeur = express.Router();
-const Hopital = require('../models/Hopital'); // Assurez-vous d'avoir défini le modèle Hopital
-
-// Route pour récupérer tous les hôpitaux
-router.get('/', async (req, res) => {
+export class AdministrateursController {
+  async getAllAdministrateurs(req, res) {
     try {
-        const hopital = await Hopital.find();
+      const administrateurs = await Administrateur.find();
+      res.json(administrateurs);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération des administrateurs' });
+    }
+  }
+
+  async getAdministrateurById(req, res) {
+    try {
+      const administrateur = await Administrateur.findById(req.params.id);
+      if (!administrateur) {
+        res.status(404).json({ message: 'Administrateur non trouvé' });
+      } else {
+        res.json(administrateur);
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération de l\'administrateur' });
+    }
+  }
+
+  async createAdministrateur(req, res) {
+    try {
+      const administrateur = new Administrateur(req.body);
+      await administrateur.save();
+      res.json(administrateur);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la création de l\'administrateur' });
+    }
+  }
+
+  async updateAdministrateur(req, res) {
+    try {
+      const administrateur = await Administrateur.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!administrateur) {
+        res.status(404).json({ message: 'Administrateur non trouvé' });
+      } else {
+        res.json(administrateur);
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la mise à jour de l\'administrateur' });
+    }
+  }
+
+  async deleteAdministrateur(req, res) {
+    try {
+      await Administrateur.findByIdAndRemove(req.params.id);
+      res.json({ message: 'Administrateur supprimé avec succès' });
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la suppression de l\'administrateur' });
+    }
+  }
+}
+
+
+//controller rendezvous
+import { RendezVous } from '../models/rendez-vous.js';
+
+export class RendezVousController {
+  async getAllRendezVous(req, res) {
+    try {
+      const rendezVous = await RendezVous.find();
+      res.json(rendezVous);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération des rendez-vous' });
+    }
+  }
+
+  async getRendezVousById(req, res) {
+    try {
+      const rendezVous = await RendezVous.findById(req.params.id);
+      if (!rendezVous) {
+        res.status(404).json({ message: 'Rendez-vous non trouvé' });
+      } else {
+        res.json(rendezVous);
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération du rendez-vous' });
+    }
+  }
+
+  async createRendezVous(req, res) {
+    try {
+      const rendezVous = new RendezVous(req.body);
+      await rendezVous.save();
+      res.json(rendezVous);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la création du rendez-vous' });
+    }
+  }
+
+  async updateRendezVous(req, res) {
+    try {
+      const rendezVous = await RendezVous.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!rendezVous) {
+        res.status(404).json({ message: 'Rendez-vous non trouvé' });
+      } else {
+        res.json(rendezVous);
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du rendez-vous' });
+    }
+  }
+
+  async deleteRendezVous(req, res) {
+    try {
+      await RendezVous.findByIdAndRemove(req.params.id);
+      res.json({ message: 'Rendez-vous supprimé avec succès' });
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la suppression du rendez-vous' });
+    }
+  }
+}
+
+
+//controller Gestionnaire
+import { Gestionnaire } from '../models/gestionnaire.js';
+
+export class GestionnairesController {
+  async getAllGestionnaires(req, res) {
+    try {
+      const gestionnaires = await Gestionnaire.find();
+      res.json(gestionnaires);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération des gestionnaires' });
+    }
+  }
+
+  async getGestionnaireById(req, res) {
+    try {
+      const gestionnaire = await Gestionnaire.findById(req.params.id);
+      if (!gestionnaire) {
+        res.status(404).json({ message: 'Gestionnaire non trouvé' });
+      } else {
+        res.json(gestionnaire);
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération du gestionnaire' });
+    }
+  }
+
+  async createGestionnaire(req, res) {
+    try {
+      const gestionnaire = new Gestionnaire(req.body);
+      await gestionnaire.save();
+      res.json(gestionnaire);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la création du gestionnaire' });
+    }
+  }
+
+  async updateGestionnaire(req, res) {
+    try {
+      const gestionnaire = await Gestionnaire.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!gestionnaire) {
+        res.status(404).json({ message: 'Gestionnaire non trouvé' });
+      } else {
+        res.json(gestionnaire);
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du gestionnaire' });
+    }
+  }
+
+  async deleteGestionnaire(req, res) {
+    try {
+      await Gestionnaire.findByIdAndRemove(req.params.id);
+      res.json({ message: 'Gestionnaire supprimé avec succès' });
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la suppression du gestionnaire' });
+    }
+  }
+}
+   
+//controller hopital
+import { Hopital } from '../models/hopital.js';
+
+export class HopitauxController {
+  async getAllHopitaux(req, res) {
+    try {
+      const hopitaux = await Hopital.find();
+      res.json(hopitaux);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération des hôpitaux' });
+    }
+  }
+
+  async getHopitalById(req, res) {
+    try {
+      const hopital = await Hopital.findById(req.params.id);
+      if (!hopital) {
+        res.status(404).json({ message: 'Hôpital non trouvé' });
+      } else {
         res.json(hopital);
+      }
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la récupération de l\'hôpital' });
     }
-});
+  }
 
-// Route pour récupérer un hôpital par ID
-router.get('/:id', async (req, res) => {
+  async createHopital(req, res) {
     try {
-        const hopital = await Hospital.findById(req.params.id);
-        if (!hospital) {
-            return res.status(404).json({ message: 'Hôpital non trouvé' });
-        }
+      const hopital = new Hopital(req.body);
+      await hopital.save();
+      res.json(hopital);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la création de l\'hôpital' });
+    }
+  }
+
+  async updateHopital(req, res) {
+    try {
+      const hopital = await Hopital.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!hopital) {
+        res.status(404).json({ message: 'Hôpital non trouvé' });
+      } else {
         res.json(hopital);
+      }
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la mise à jour de l\'hôpital' });
     }
-});
+  }
 
-// faire d Autres routes pour la création, la mise à jour et la suppression d'un hôpital
-
-module.exports = router;
-
-const express = require('express');
-const route = express.Router();
-const Hospital = require('../model/Hospital'); // Assurez-vous d'avoir défini le modèle Hospital
-
-// Route pour récupérer tous les hôpitaux
-router.get('/', async (req, res) => {
+  async deleteHopital(req, res) {
     try {
-        const hospitals = await Hopital.find();
-        res.json(hopitals);
+      await Hopital.findByIdAndRemove(req.params.id);
+      res.json({ message: 'Hôpital supprimé avec succès' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la suppression de l\'hôpital' });
     }
-});
+  }
+}
 
-// Route pour récupérer un hôpital par ID
-router.get('/:id', async (req, res) => {
+//controller medecin
+
+import { Medecin } from '../models/medecin.js';
+
+export class MedecinsController {
+  async getAllMedecins(req, res) {
     try {
-        const hopital = await Hospital.findById(req.params.id);
-        if (!hospital) {
-            return res.status(404).json({ message: 'Hôpital non trouvé' });
-        }
-        res.json(hopital);
+      const medecins = await Medecin.find();
+      res.json(medecins);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la récupération des médecins' });
     }
-});
+  }
 
-// faire d Autres routes pour la création, la mise à jour et la suppression d'un hôpital
-
-module.exports = Routes;
-
-// routes/patient.js
-
-const express = require('express');
-const Routes = express.Router();
-const Patient = require('../models/Patient'); // Assurez-vous d'avoir défini le modèle Patient
-
-// Route pour récupérer tous les patients
-router.get('/', async (req, res) => {
+  async getMedecinById(req, res) {
     try {
-        const patients = await Patient.find();
-        res.json(patients);
+      const medecin = await Medecin.findById(req.params.id);
+      if (!medecin) {
+        res.status(404).json({ message: 'Médecin non trouvé' });
+      } else {
+        res.json(medecin);
+      }
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la récupération du médecin' });
     }
-});
+  }
 
-// Route pour récupérer un patient par ID
-router.get('/:id', async (req, res) => {
+  async createMedecin(req, res) {
     try {
-        const patient = await Patient.findById(req.params.id);
-        if (!patient) {
-            return res.status(404).json({ message: 'Patient non trouvé' });
-        }
+      const medecin = new Medecin(req.body);
+      await medecin.save();
+      res.json(medecin);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la création du médecin' });
+    }
+  }
+
+  async updateMedecin(req, res) {
+    try {
+      const medecin = await Medecin.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!medecin) {
+        res.status(404).json({ message: 'Médecin non trouvé' });
+      } else {
+        res.json(medecin);
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du médecin' });
+    }
+  }
+
+  async deleteMedecin(req, res) {
+    try {
+      await Medecin.findByIdAndRemove(req.params.id);
+      res.json({ message: 'Médecin supprimé avec succès' });
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la suppression du médecin' });
+    }
+  }
+}
+
+//controller patient
+
+import { Patient } from '../models/patient.js';
+
+export class PatientsController {
+  async getAllPatients(req, res) {
+    try {
+      const patients = await Patient.find();
+      res.json(patients);
+    } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la récupération des patients' });
+    }
+  }
+
+  async getPatientById(req, res) {
+    try {
+      const patient = await Patient.findById(req.params.id);
+      if (!patient) {
+        res.status(404).json({ message: 'Patient non trouvé' });
+      } else {
         res.json(patient);
+      }
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la récupération du patient' });
     }
-});
+  }
 
-// Route pour créer un nouveau patient
-router.post('/', async (req, res) => {
+  async createPatient(req, res) {
     try {
-        const { nom, prenom, adresse, ville, telephone, dateNaissance, numeroSecuSociale } = req.body;
-        const newPatient = new Patient({
-            nom,
-            prenom,
-            adresse,
-            ville,
-            telephone,
-            dateNaissance,
-            numeroSecuSociale
-        });
-
-        const patient = await newPatient.save();
-        res.status(201).json(patient);
+      const patient = new Patient(req.body);
+      await patient.save();
+      res.json(patient);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la création du patient' });
     }
-});
+  }
 
-// Route pour mettre à jour un patient par ID
-router.put('/:id', async (req, res) => {
+  async updatePatient(req, res) {
     try {
-        const { nom, prenom, adresse, ville, telephone, dateNaissance, numeroSecuSociale } = req.body;
-        const updatedPatient = {
-            nom,
-            prenom,
-            adresse,
-            ville,
-            telephone,
-            dateNaissance,
-            numeroSecuSociale
-        };
-
-        const patient = await Patient.findByIdAndUpdate(req.params.id, updatedPatient, { new: true });
-        if (!patient) {
-            return res.status(404).json({ message: 'Patient non trouvé' });
-        }
+      const patient = await Patient.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!patient) {
+        res.status(404).json({ message: 'Patient non trouvé' });
+      } else {
         res.json(patient);
+      }
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du patient' });
     }
-});
+  }
 
-// Route pour supprimer un patient par ID
-router.delete('/:id', async (req, res) => {
+  async deletePatient(req, res) {
     try {
-        const patient = await Patient.findByIdAndDelete(req.params.id);
-        if (!patient) {
-            return res.status(404).json({ message: 'Patient non trouvé' });
-        }
-        res.json({ message: 'Patient supprimé' });
+      await Patient.findByIdAndRemove(req.params.id);
+      res.json({ message: 'Patient supprimé avec succès' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la suppression du patient' });
     }
-});
+  }
+}
 
-module.exports = router;
 
 
-// routes/services.js
+//controller service
+import { Service } from '../models/service.js';
 
-const express = require('express');
-const routes = express.Router();
-const Service = require('../models/Service'); // Assurez-vous d'avoir défini le modèle Service
-
-// Route pour récupérer tous les services
-router.get('/', async (req, res) => {
+export class ServicesController {
+  async getAllServices(req, res) {
     try {
-        const services = await Service.find();
-        res.json(services);
+      const services = await Service.find();
+      res.json(services);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la récupération des services' });
     }
-});
+  }
 
-// Route pour récupérer un service par ID
-router.get('/:id', async (req, res) => {
+  async getServiceById(req, res) {
     try {
-        const service = await Service.findById(req.params.id);
-        if (!service) {
-            return res.status(404).json({ message: 'Service non trouvé' });
-        }
+      const service = await Service.findById(req.params.id);
+      if (!service) {
+        res.status(404).json({ message: 'Service non trouvé' });
+      } else {
         res.json(service);
+      }
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la récupération du service' });
     }
-});
+  }
 
-// Route pour créer un nouveau service
-router.post('/', async (req, res) => {
+  async createService(req, res) {
     try {
-        const { nom, description } = req.body;
-        const newService = new Service({
-            nom,
-            description
-        });
-
-        const service = await newService.save();
-        res.status(201).json(service);
+      const service = new Service(req.body);
+      await service.save();
+      res.json(service);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la création du service' });
     }
-});
+  }
 
-// Route pour mettre à jour un service par ID
-router.put('/:id', async (req, res) => {
+  async updateService(req, res) {
     try {
-        const { nom, description } = req.body;
-        const updatedService = {
-            nom,
-            description
-        };
-
-        const service = await Service.findByIdAndUpdate(req.params.id, updatedService, { new: true });
-        if (!service) {
-            return res.status(404).json({ message: 'Service non trouvé' });
-        }
+      const service = await Service.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!service) {
+        res.status(404).json({ message: 'Service non trouvé' });
+      } else {
         res.json(service);
+      }
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la mise à jour du service' });
     }
-});
+  }
 
-// Route pour supprimer un service par ID
-router.delete('/:id', async (req, res) => {
+  async deleteService(req, res) {
     try {
-        const service = await Service.findByIdAndDelete(req.params.id);
-        if (!service) {
-            return res.status(404).json({ message: 'Service non trouvé' });
-        }
-        res.json({ message: 'Service supprimé' });
+      await Service.findByIdAndRemove(req.params.id);
+      res.json({ message: 'Service supprimé avec succès' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Erreur serveur');
+      res.status(500).json({ message: 'Erreur lors de la suppression du service' });
     }
-});
-
-module.exports
-
-
-// controllers gestionnaires
-
-const express = require('express');
-const router = express.Router();
-const Hospital = require('../models/Hospital'); // Assurez-vous d'avoir défini le modèle Hospital
-const Patient = require('../models/Patient'); // Assurez-vous d'avoir défini le modèle Patient
-const Service = require('../models/Service'); // Assurez-vous d'avoir défini le modèle Service
+  }
+}
