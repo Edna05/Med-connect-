@@ -15,7 +15,7 @@ app. use("/post", postRoute);
 
 
 app.listen(port, () => {
-    console.log(" je suis pret a demarrer " + port);
+    console.log(" je travaille bien " + port);
 });
 
 
